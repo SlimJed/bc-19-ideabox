@@ -142,9 +142,22 @@ input[type="submit"]:hover {
     <input checked='' id='remember' name='remember' type='checkbox'/>
     <label for='remember'></label>Remember me
   </div>
-  <input type='submit' value='Sign in'/>
+  <input type='submit' value='Register'/>
   <a class='forgot' href='#'>Forgot your password?</a>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD9XNmswgLSwsJoCbM89meKN_offp-ERdE",
+    authDomain: "ideabox-15cf7.firebaseapp.com",
+    databaseURL: "https://ideabox-15cf7.firebaseio.com",
+    storageBucket: "ideabox-15cf7.appspot.com",
+    messagingSenderId: "883050155915"
+  };
+  firebase.initializeApp(config);
+</script>
 <script type="text/javascript">
 	//show password
 $(document).ready(function(){
