@@ -135,29 +135,18 @@ input[type="submit"]:hover {
   <h1 class="title-idea">Welcome to idea-box</h1>
 <div class='login'>
   <h2>Register</h2>
-  <input name='username' placeholder='Username' type='text'/>
-  <input type="text" name="email" placeholder="Email">
-  <input id='password' name='password' placeholder='Password' type='password'/>
+  <input name='username' placeholder='Username' type='text' id="regUsername"/>
+  <input type="text" name="email" placeholder="Email" id="regEmail">
+  <input id='regPassword' name='password' placeholder='Password' type='password'/>
   <div class='remember'>
     <input checked='' id='remember' name='remember' type='checkbox'/>
     <label for='remember'></label>Remember me
   </div>
-  <input type='submit' value='Register'/>
+  <input type='submit' value='Register' id="btnSignup" />
   <a class='forgot' href='#'>Forgot your password?</a>
 </div>
-
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyD9XNmswgLSwsJoCbM89meKN_offp-ERdE",
-    authDomain: "ideabox-15cf7.firebaseapp.com",
-    databaseURL: "https://ideabox-15cf7.firebaseio.com",
-    storageBucket: "ideabox-15cf7.appspot.com",
-    messagingSenderId: "883050155915"
-  };
-  firebase.initializeApp(config);
-</script>
+<script type="text/javascript" src="javascripts/index.js"></script>
 <script type="text/javascript">
 	//show password
 $(document).ready(function(){
