@@ -63,7 +63,7 @@ body {
     border: 3px solid #252730;
     box-shadow: 0px 0px 0px 2px #b5cd60;
     }
-    input[type="submit"] {
+    button {
     background: #b5cd60;
     border: 0;
     width: 250px;
