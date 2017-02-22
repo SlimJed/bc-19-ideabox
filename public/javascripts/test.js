@@ -7,22 +7,18 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
-const auth = firebase.auth();
+var auth = firebase.auth();
+
 
 function login() {
-  const txtEmail = document.getElementById('email');
-  const txtPassword = document.getElementById('password');
-  const email = txtEmail.value;
-  const password = txtPassword.value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-  //Sign in
   firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
+    console.log(error.code);
+    console.log(error.message);
   });
+  //swindow.location.href = "http://localhost:3000/dashboard";
 }
 
 function signup() {
@@ -37,23 +33,93 @@ function signup() {
     console.log(error.code);
     console.log(error.message);
   });
-
 }
 
 function signout() {
   firebase.auth().signOut().then(function () {
-    console.log("Logged out!")
+    window.location.href = "http://localhost:3000";
+
   }, function (error) {
     console.log(error.code);
     console.log(error.message);
   });
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
+var auth_user;
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    auth_user = user;
     console.log(user);
     document.getElementById("userId").innerHTML = user.email;
   } else {
 
   }
 });
+
+var ideaBody = document.getElementById('postIdea');
+
+function postIdea() {
+  var message = ideaBody.value;
+  var firebaseRef = firebase.database().ref();
+  firebaseRef.child('ideas').push({
+    body: message,
+    user_id: auth_user.uid,
+    upvotes: 0,
+    downvotes: 0
+  });
+  //console.log()
+}
+
+const ideas = firebase.database().ref().child('ideas');
+var ulList = document.getElementById('list');
+ideas.on('child_added', snap => {
+  //console.log(snap.key);
+  addIdeasList(snap);
+
+});
+
+/**
+ *Used to add a list of the old ideas to the page
+ */
+function addIdeasList(snap) {
+  const li = document.createElement('li')
+  li.className += " " + "list-group-item";
+  li.innerText = snap.val().body;
+  const bt1 = document.createElement('button');
+  bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign ml10";
+  bt1.innerHTML =snap.val().upvotes;
+  bt1.setAttribute("data-ideaid", snap.key);
+  bt1.setAttribute("onclick", "upvote()");
+  li.appendChild(bt1);
+
+  const bt2 = document.createElement('button');
+  bt2.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign";
+  bt2.innerHTML = 0;
+  li.appendChild(bt2);
+  ulList.appendChild(li);
+}
+
+function upvote(e) {
+  var newupvote
+  e = e || window.event;
+  var targ = e.target || e.srcElement;
+  if (targ.nodeType == 3) targ = targ.parentNode; // defeat Safari bug
+  var ideaid = targ.dataset.ideaid;
+
+  //get upvotes value
+  var upvotes = firebase.database().ref('ideas/' + ideaid + '/upvotes');
+  upvotes.on('value', function (snapshot) {
+
+    //increment it
+    newupvote = snapshot.val() + 1;
+  });
+
+  //update db with new value
+  var updateData = {
+    upvotes: newupvote
+  };
+  var updates = {};
+  updates['/ideas/' + ideaid] = updateData;
+  firebase.database().ref().update(updates);
+  targ.innerHTML = snapshot.val();  
+}

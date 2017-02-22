@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="stylesheets/dashboard.css">
         <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-messaging.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-messaging.js"></script>
         
     </head>
     <body>
@@ -32,57 +32,51 @@
                 <ul class="nav navbar-nav navbar-right">
                     
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
-                        role="button" aria-haspopup="true" aria-expanded="false"><span id="userId">User</span> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" onclick="signout()">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                </div><!--/.nav-collapse -->
-            </nav>
-            <div class="container top-margin" >
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <form action="">
-                            <div class="form-group">
-                                <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-success postIdeaBtn" value="Post Idea">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <hr>
-            </div>
-            <div class="container marginTop20">
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                This are the highest voted ideas
-                            </div>
-                            <ul class="list-group">
-                                <li class="list-group-item">Sample idea
-                                    <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign">X</button>
-                                    <span class="floatRight">&nbsp;&nbsp;</span>
-                                    <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign">Y</button>
-                                </li>
-                                <li class="list-group-item">Sample idea
-                                    <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign" >X</button>
-                                    <span class="floatRight">&nbsp;&nbsp;</span>
-                                    <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign">Y</button>
-                                </li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                            role="button" aria-haspopup="true" aria-expanded="false"><span id="userId">User</span> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" onclick="signout()">Logout</a></li>
                             </ul>
+                        </li>
+                    </ul>
+                    </div><!--/.nav-collapse -->
+                </nav>
+                <div class="container top-margin" >
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group">
+                                <textarea name="" id="postIdea" cols="30" rows="5" class="form-control" required=""></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success postIdeaBtn" value="Post Idea" onClick="postIdea()" id="btnPostIdea">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="container marginTop20">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    This are the highest voted ideas
+                                </div>
+                                <ul class="list-group" id="list">
+                                    <li class="list-group-item">Sample idea
+                                        <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign" style="margin-left: 10px">0</button>
+                                        
+                                        <button class=" btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign">0</button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <script type="text/javascript" src="javascripts/test.js"></script>
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        </body>
-    </html>
+                <!--<script type="text/javascript" src="javascripts/authentication.js"></script>-->
+                <script type="text/javascript" src="javascripts/test.js"></script>
+                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            </body>
+        </html>
