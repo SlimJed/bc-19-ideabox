@@ -30,6 +30,10 @@ app.get('/dashboard',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/dashboard.html'));
 });
 
+app.get('/comment',function(req,res){
+  res.sendFile(path.join(__dirname+ '/views/comment.html'));
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
