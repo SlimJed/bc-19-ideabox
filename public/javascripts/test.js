@@ -120,13 +120,13 @@ function addIdeasList(snap) {
   li.className += " " + "list-group-item";
   li.innerText = userNameExtract + " says " + snap.val().title;
   var bt1 = document.createElement('button');
-  bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
+  bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-triangle-top floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;
   bt1.setAttribute("data-ideaid", snap.key);
   bt1.setAttribute("onclick", "upvote()");
   li.appendChild(bt1);
   var bt2 = document.createElement('button');
-  bt2.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign";
+  bt2.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-triangle-bottom floatRight verticalAlign";
   bt2.innerHTML = snap.val().downvotes;
   bt2.setAttribute("data-ideaid", snap.key);
   bt2.setAttribute("onclick", "downvote()");
