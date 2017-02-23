@@ -113,10 +113,11 @@ ideas.on('child_added', snap => {
  * @param snap  - An object containig the duplicate of the database 
  */
 function addIdeasList(snap) {
+  var userNameExtract = (auth_user.email).match(/^.*@/i)[0].slice(0, -1);
   var ulList = document.getElementById('list');
   var li = document.createElement('li')
   li.className += " " + "list-group-item";
-  li.innerText = snap.val().title;
+  li.innerText = userNameExtract + ":: "+ snap.val().title;
   var bt1 = document.createElement('button');
   bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;
@@ -130,7 +131,6 @@ function addIdeasList(snap) {
   bt2.setAttribute("onclick", "downvote()");
   li.appendChild(bt2);
   ulList.appendChild(li);
-  console.log(snap.val());
 }
 
 /**
