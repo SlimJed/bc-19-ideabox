@@ -9,6 +9,18 @@ firebase.initializeApp(config);
 var auth = firebase.auth();
 
 /**
+ *I embedded a simple markdown editor
+ */
+var simplemde = new SimpleMDE({ element: document.getElementById("postDesc") });
+//Declare a variable to store the description ID
+var ideaMarkDown = "";
+simplemde.codemirror.on("change", function () {
+  //Save the markdown value to the ideaMarkDown variable
+  ideaMarkDown = simplemde.value();
+  console.log(ideaMarkDown);
+});
+
+/**
  *The login function
  */
 function login() {
@@ -23,7 +35,7 @@ function login() {
   });
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      window.location.href = "http://localhost:3000/dashboard";
+      window.location.href = "dashboard";
     }
   });
 }
@@ -34,9 +46,10 @@ function login() {
 function signup() {
   var newEmail = document.getElementById('regEmail');
   var newPassword = document.getElementById('regPassword');
-  var newUsername = document.getElementById('regUsername');
   var email = newEmail.value;
   var password = newPassword.value;
+  var newUsername = document.getElementById('regUsername');
+  var userName = newUsername.value;
 
   //SignUp authentication with firebase
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
@@ -45,17 +58,25 @@ function signup() {
   });
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      window.location.href = "http://localhost:3000/dashboard";
+      var userId = user.uid;
+      var firebaseRef = firebase.database().ref();
+      var userRef = firebaseRef.child('users/' + userId).set({
+        userId,
+        userName,
+        email,
+        password
+      });
+      window.location.href = "dashboard";
     }
   });
 }
 
 /**
  *The SignOut function
-*/
+ */
 function signout() {
   firebase.auth().signOut().then(function () {
-    window.location.href = "http://localhost:3000";
+    window.location.href = "/";
   }, function (error) {
     console.log(error.code);
     console.log(error.message);
@@ -69,17 +90,21 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("userId").innerHTML = user.email;
   }
 });
-var ideaBody = document.getElementById('postIdea');
+var ideaT = document.getElementById('postTitle');
+var ideaD = document.getElementById('postDesc');
 
 /**
  *The PostIdea function
  *This enables a user to post ideas to the database
  */
 function postIdea() {
-  var message = ideaBody.value;
+  var ideaTitle = ideaT.value;
+  var ideaDesc = ideaD.value;
   var firebaseRef = firebase.database().ref();
   firebaseRef.child('ideas').push({
-    body: message.trim(),
+    title: ideaTitle.trim(),
+    //description: ideaDesc.trim(),
+    description: ideaMarkDown,
     user_id: auth_user.uid,
     upvotes: 0,
     downvotes: 0
@@ -95,12 +120,12 @@ ideas.on('child_added', snap => {
 /**
  *Used to add a list of the old ideas to the page
  * @param snap  - An object containig the duplicate of the database 
-*/
+ */
 function addIdeasList(snap) {
   var ulList = document.getElementById('list');
   var li = document.createElement('li')
   li.className += " " + "list-group-item";
-  li.innerText = snap.val().body;
+  li.innerText = snap.val().title;
   var bt1 = document.createElement('button');
   bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;
@@ -119,7 +144,7 @@ function addIdeasList(snap) {
 /**
  *The upvote function
  *@param e - The event event paramater
-*/
+ */
 function upvote(e) {
   var newupvote
   e = e || window.event;
@@ -133,7 +158,7 @@ function upvote(e) {
   //Monitor upvotes value change
   upvotes.on('value', function (snapshot) {
     currentUpvote = snapshot.val();
-    
+
     //increment it
     newupvote = snapshot.val() + 1;
   });
@@ -162,7 +187,7 @@ function downvote(e) {
   var downvotes = firebase.database().ref('ideas/' + ideaid + '/downvotes');
   downvotes.on('value', function (snapshot) {
     currentdownvote = snapshot.val();
-    
+
     //increment it
     newdownvote = snapshot.val() - 1;
   });
