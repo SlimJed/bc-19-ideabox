@@ -35,7 +35,7 @@ app.get('/comment',function(req,res){
 });
 
 app.get('*', function(req, res){
-  res.send('what???', 404);
+   res.sendFile(path.join(__dirname+ '/views/404.html'));
 });
 
 // catch 404 and forward to error handler

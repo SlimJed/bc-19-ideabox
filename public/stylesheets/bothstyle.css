@@ -1,4 +1,7 @@
-
+#errorsOut{
+  color: red;
+  text-align: center;
+}
 .myBody{
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   color: #1d2129;

@@ -28,8 +28,9 @@ function login() {
 
   //SignIn authentication with firebase
   firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error, user) {
-    console.log(error.code);
-    console.log(error.message);
+    if (error) {
+      document.getElementById('errorsOut').innerHTML = error.message;
+    }
   });
 
   firebase.auth().onAuthStateChanged(function (user) {
@@ -52,8 +53,9 @@ function signup() {
 
   //SignUp authentication with firebase
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-    console.log(error.code);
-    console.log(error.message);
+    if (error) {
+      document.getElementById('errorsOut').innerHTML = error.message;
+    }
   });
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -68,10 +70,7 @@ function signup() {
 function signout() {
   firebase.auth().signOut().then(function () {
     window.location.href = "/";
-  }, function (error) {
-    console.log(error.code);
-    console.log(error.message);
-  });
+  }, function (error) {});
 }
 
 var auth_user;
@@ -117,7 +116,7 @@ function addIdeasList(snap) {
   var ulList = document.getElementById('list');
   var li = document.createElement('li')
   li.className += " " + "list-group-item";
-  li.innerText = userNameExtract + ":: "+ snap.val().title;
+  li.innerText = userNameExtract + ":: " + snap.val().title;
   var bt1 = document.createElement('button');
   bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;
