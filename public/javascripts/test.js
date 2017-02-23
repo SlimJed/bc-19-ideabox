@@ -28,8 +28,9 @@ function login() {
 
   //SignIn authentication with firebase
   firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error, user) {
+    console.log(error.message);
     if (error) {
-      document.getElementById('errorsOut').innerHTML = error.message;
+      document.getElementById('errorsOutSignIn').innerHTML = error.message;
     }
   });
 
@@ -49,12 +50,12 @@ function signup() {
   var email = newEmail.value;
   var password = newPassword.value;
   var newUsername = document.getElementById('regUsername');
-  var userName = newUsername.value;
 
   //SignUp authentication with firebase
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+    console.log(error.message);
     if (error) {
-      document.getElementById('errorsOut').innerHTML = error.message;
+      document.getElementById('errorsOutSignUp').innerHTML = error.message;
     }
   });
   firebase.auth().onAuthStateChanged(function (user) {
@@ -88,20 +89,21 @@ var ideaD = document.getElementById('postDesc');
  *This enables a user to post ideas to the database
  */
 function postIdea() {
+  var userNameExtract = (auth_user.email).match(/^.*@/i)[0].slice(0, -1);
   var ideaTitle = ideaT.value;
   var ideaDesc = ideaD.value;
   var firebaseRef = firebase.database().ref();
   firebaseRef.child('ideas').push({
     title: ideaTitle.trim(),
-    //description: ideaDesc.trim(),
     description: ideaMarkDown,
     user_id: auth_user.uid,
+    username: userNameExtract,
     upvotes: 0,
     downvotes: 0
   });
 }
 
-var ideas = firebase.database().ref().child('ideas');
+var ideas = firebase.database().ref().child('ideas').orderByChild('upvotes');
 //This monitors a change in the idea list, in the database.
 ideas.on('child_added', snap => {
   addIdeasList(snap);
@@ -112,11 +114,11 @@ ideas.on('child_added', snap => {
  * @param snap  - An object containig the duplicate of the database 
  */
 function addIdeasList(snap) {
-  var userNameExtract = (auth_user.email).match(/^.*@/i)[0].slice(0, -1);
+  var userNameExtract = snap.val().username;
   var ulList = document.getElementById('list');
   var li = document.createElement('li')
   li.className += " " + "list-group-item";
-  li.innerText = userNameExtract + ":: " + snap.val().title;
+  li.innerText = userNameExtract + " says " + snap.val().title;
   var bt1 = document.createElement('button');
   bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;

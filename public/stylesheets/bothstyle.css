@@ -1,4 +1,9 @@
-#errorsOut{
+#errorsOutSignIn{
+  color: red;
+  text-align: center;
+}
+
+#errorsOutSignUp{
   color: red;
   text-align: center;
 }
