@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="description" content="facebook login clone">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to Andela's Idea Box| Andela</title>
+    <link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/bootstrap-theme.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/bothstyle.css" rel="stylesheet" type="text/css">
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-messaging.js"></script>
+    <script type="text/javascript" src="javascripts/test.js"></script>
+    <!-- HTML5 shim for IE backwards compatibility -->
+    <!-- [if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+    </script>
+    <!-[endif]-->
+  </head>
+  <body class="myBody">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign Up | Ideas Box</h4>
+          </div>
+          <div class="modal-body">
+            <div class="jumbotron mybk">
+              <div class="container">
+                <div class="row">
+                  <div class="form-horizontal center-block">
+                    <div class="col-md-10 col-md-offset-2 col-sm-8">
+                      <div class="col-md-10 col-sm-12">
+                        <div class="form-group center-block">
+                          <div class="">
+                            <input type="name" class="form-control" id="inputName" placeholder="Full Name">
+                          </div>
+                        </div>
+                        
+                        <div class="form-group center-block">
+                          <div class="">
+                            <input type="name" class="form-control" id="regUsername" placeholder="UserName">
+                          </div>
+                        </div>
+                        <div class="form-group center-block">
+                          <div class="">
+                            <input type="email" name="eMail" id="regEmail" class="form-control" placeholder="mail@example.com">
+                          </div>
+                        </div>
+                        <div class="form-group center-block">
+                          <div class="">
+                            <input type="password" class="form-control" id="regPassword" placeholder="Password">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="bookRm">
+                            <button type="submit" class="btn form-btn" onClick="signup()" id="btnSignup">Register</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="clear:both;"></div>
+    <nav class="navHeader">
+      <div class="container-fluid  logoHeader">
+        <div class="navbar-header logoHeader">
+          <a class="navbar-brand aHeader" href="#"><img src="images/ideasbox.png"></a>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron myLogArea center-block">
+      <div class="logHead">
+        <span class="_x456">Welcome! | Sign in</span>
+      </div>
+      <div class="form-horizontal center-block">
+        <div class="form-group center-block">
+          <div class="col-sm-10 myForm">
+            <input type="email" name="eMail" id="email" class="form-control" placeholder="mail@example.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 myForm">
+            <input type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="myForm col-sm-10">
+            <button class="btn form-btn" id="btnLogin" onClick="login()">Sign in</button>
+          </div>
+        </div>
+        <div class="form-group ">
+          <div class="col-sm-4 myForm">
+            <hr class="myline">
+          </div>
+          <div class="col-sm-2 or">
+            <span>or</span>
+          </div>
+          <div class=" col-sm-4">
+            <hr class="myline">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <a href="#" id="_55" data-toggle="modal" data-target="#myModal"><button type="submit" class="btn form-btn" id="newacct">Create New Account</button></a>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 forgot">
+            <span id="acct">Forgotten account?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="div-footer">
+      <div class="jumbotron footer"></div>
+    </div>
+    <script src="javascripts/jquery-1.11.2.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    
+  </body>
+</html>

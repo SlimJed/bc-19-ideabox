@@ -9,6 +9,7 @@
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="stylesheets/dashboard.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
         <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-database.js"></script>
@@ -17,56 +18,60 @@
     </head>
     <body>
         <!-- Fixed navbar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">IDEA-BOX!</a>
-            </div>
-            
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                            role="button" aria-haspopup="true" aria-expanded="false"><span id="userId">User</span> <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" onclick="signout()">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    </div><!--/.nav-collapse -->
-                </nav>
-                <div class="container top-margin" >
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <div class="form-group">
-                                <textarea name="" id="postIdea" cols="30" rows="5" class="form-control" required=""></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-success postIdeaBtn" value="Post Idea" onClick="postIdea()" id="btnPostIdea">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-dash">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">IDEA-BOX!</a>
+                </div>
+                
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                role="button" aria-haspopup="true" aria-expanded="false"><span id="userId">User</span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" onclick="signout()">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        </div><!--/.nav-collapse --></div>
+                    </nav>
+                    <div class="container top-margin" >
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="form-group">
+                                    <input type="text" id="postTitle" placeholder="Short description of your idea" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="CodeMirror" id="postDesc" cols="10" rows="3" class="form-control" required placeholder="Idea description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success postIdeaBtn" value="Post Idea" onClick="postIdea()" id="btnPostIdea">
+                                </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <hr>
-                </div>
-                <div class="container marginTop20">
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    This are the highest voted ideas
-                                </div>
+                    <div class="container marginTop20">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        This are the highest voted ideas
+                                    </div>
                                 <ul class="list-group" id="list"></ul>
-                <!--<script type="text/javascript" src="javascripts/authentication.js"></script>-->
-                <script type="text/javascript" src="javascripts/test.js"></script>
-                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                <!-- Include all compiled plugins (below), or include individual files as needed -->
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            </body>
-        </html>
+                                <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+                                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                                <!-- Include all compiled plugins (below), or include individual files as needed -->
+                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                                <script type="text/javascript" src="javascripts/test.js"></script>
+                            </body>
+                        </html>

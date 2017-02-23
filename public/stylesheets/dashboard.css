@@ -20,3 +20,11 @@
 .ml10	{
 	margin-left: 10px
 }
+.CodeMirror, .CodeMirror-scroll {
+    min-height: 200px;
+}
+.container-dash{
+	max-width: 600px;
+	margin: 0px  auto;
+	padding: 0px 15px;
+}
