@@ -22,6 +22,7 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/login.html'));
 });
 
+
 app.get('/signup',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/signup.html'));
 });

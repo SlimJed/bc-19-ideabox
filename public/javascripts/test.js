@@ -6,39 +6,56 @@ var config = {
   messagingSenderId: "883050155915"
 };
 firebase.initializeApp(config);
-var database = firebase.database();
 var auth = firebase.auth();
 
-
+/**
+ *The login function
+ */
 function login() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
 
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+  //SignIn authentication with firebase
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error, user) {
     console.log(error.code);
     console.log(error.message);
+
   });
-  //swindow.location.href = "http://localhost:3000/dashboard";
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      window.location.href = "http://localhost:3000/dashboard";
+    }
+  });
 }
 
+/**
+ *The SignUp function
+ */
 function signup() {
-  const newEmail = document.getElementById('regEmail');
-  const newPassword = document.getElementById('regPassword');
-  const newUsername = document.getElementById('regUsername');
-  const email = newEmail.value;
-  const password = newPassword.value;
+  var newEmail = document.getElementById('regEmail');
+  var newPassword = document.getElementById('regPassword');
+  var newUsername = document.getElementById('regUsername');
+  var email = newEmail.value;
+  var password = newPassword.value;
 
-  //Sign up
+  //SignUp authentication with firebase
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
     console.log(error.code);
     console.log(error.message);
   });
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      window.location.href = "http://localhost:3000/dashboard";
+    }
+  });
 }
 
+/**
+ *The SignOut function
+*/
 function signout() {
   firebase.auth().signOut().then(function () {
     window.location.href = "http://localhost:3000";
-
   }, function (error) {
     console.log(error.code);
     console.log(error.message);
@@ -49,56 +66,60 @@ var auth_user;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     auth_user = user;
-    console.log(user);
     document.getElementById("userId").innerHTML = user.email;
-  } else {
-
   }
 });
-
 var ideaBody = document.getElementById('postIdea');
 
+/**
+ *The PostIdea function
+ *This enables a user to post ideas to the database
+ */
 function postIdea() {
   var message = ideaBody.value;
   var firebaseRef = firebase.database().ref();
   firebaseRef.child('ideas').push({
-    body: message,
+    body: message.trim(),
     user_id: auth_user.uid,
     upvotes: 0,
     downvotes: 0
   });
-  //console.log()
 }
 
-const ideas = firebase.database().ref().child('ideas');
-var ulList = document.getElementById('list');
+var ideas = firebase.database().ref().child('ideas');
+//This monitors a change in the idea list, in the database.
 ideas.on('child_added', snap => {
-  //console.log(snap.key);
   addIdeasList(snap);
-
 });
 
 /**
  *Used to add a list of the old ideas to the page
- */
+ * @param snap  - An object containig the duplicate of the database 
+*/
 function addIdeasList(snap) {
-  const li = document.createElement('li')
+  var ulList = document.getElementById('list');
+  var li = document.createElement('li')
   li.className += " " + "list-group-item";
   li.innerText = snap.val().body;
-  const bt1 = document.createElement('button');
-  bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign ml10";
-  bt1.innerHTML =snap.val().upvotes;
+  var bt1 = document.createElement('button');
+  bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign ml10";
+  bt1.innerHTML = snap.val().upvotes;
   bt1.setAttribute("data-ideaid", snap.key);
   bt1.setAttribute("onclick", "upvote()");
   li.appendChild(bt1);
-
-  const bt2 = document.createElement('button');
-  bt2.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-up floatRight verticalAlign";
-  bt2.innerHTML = 0;
+  var bt2 = document.createElement('button');
+  bt2.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-chevron-down floatRight verticalAlign";
+  bt2.innerHTML = snap.val().downvotes;
+  bt2.setAttribute("data-ideaid", snap.key);
+  bt2.setAttribute("onclick", "downvote()");
   li.appendChild(bt2);
   ulList.appendChild(li);
 }
 
+/**
+ *The upvote function
+ *@param e - The event event paramater
+*/
 function upvote(e) {
   var newupvote
   e = e || window.event;
@@ -108,8 +129,11 @@ function upvote(e) {
 
   //get upvotes value
   var upvotes = firebase.database().ref('ideas/' + ideaid + '/upvotes');
-  upvotes.on('value', function (snapshot) {
 
+  //Monitor upvotes value change
+  upvotes.on('value', function (snapshot) {
+    currentUpvote = snapshot.val();
+    
     //increment it
     newupvote = snapshot.val() + 1;
   });
@@ -118,8 +142,35 @@ function upvote(e) {
   var updateData = {
     upvotes: newupvote
   };
-  var updates = {};
-  updates['/ideas/' + ideaid] = updateData;
-  firebase.database().ref().update(updates);
-  targ.innerHTML = snapshot.val();  
+  firebase.database().ref().child("/ideas/" + ideaid).update(updateData);
+  targ.innerHTML = currentUpvote;
+
+}
+
+/**
+ *The downvotevote function
+ *@param e - The event event paramater
+ */
+function downvote(e) {
+  var newdownvote
+  e = e || window.event;
+  var targ = e.target || e.srcElement;
+  if (targ.nodeType == 3) targ = targ.parentNode; // defeat Safari bug
+  var ideaid = targ.dataset.ideaid;
+
+  //get upvotes value
+  var downvotes = firebase.database().ref('ideas/' + ideaid + '/downvotes');
+  downvotes.on('value', function (snapshot) {
+    currentdownvote = snapshot.val();
+    
+    //increment it
+    newdownvote = snapshot.val() - 1;
+  });
+  targ.innerHTML = currentdownvote;
+
+  //Update the database
+  var updateData = {
+    downvotes: newdownvote
+  };
+  firebase.database().ref().child("/ideas/" + ideaid).update(updateData);
 }
