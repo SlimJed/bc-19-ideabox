@@ -22,7 +22,6 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/index.html'));
 });
 
-
 app.get('/signup',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/index.html'));
 });

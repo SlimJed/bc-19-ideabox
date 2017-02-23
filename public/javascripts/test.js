@@ -17,7 +17,6 @@ var ideaMarkDown = "";
 simplemde.codemirror.on("change", function () {
   //Save the markdown value to the ideaMarkDown variable
   ideaMarkDown = simplemde.value();
-  console.log(ideaMarkDown);
 });
 
 /**
@@ -31,8 +30,8 @@ function login() {
   firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error, user) {
     console.log(error.code);
     console.log(error.message);
-
   });
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       window.location.href = "dashboard";
@@ -58,14 +57,6 @@ function signup() {
   });
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      var userId = user.uid;
-      var firebaseRef = firebase.database().ref();
-      var userRef = firebaseRef.child('users/' + userId).set({
-        userId,
-        userName,
-        email,
-        password
-      });
       window.location.href = "dashboard";
     }
   });
@@ -139,6 +130,7 @@ function addIdeasList(snap) {
   bt2.setAttribute("onclick", "downvote()");
   li.appendChild(bt2);
   ulList.appendChild(li);
+  console.log(snap.val());
 }
 
 /**
