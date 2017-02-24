@@ -8,7 +8,7 @@
 	* Other users can comment on the ideas
 	* Other users can upvote / downvote ideas
 
-* Click [here](https://testttttt/) to access the app on Heroku.
+* Click [here](https://sleepy-reaches-99894.herokuapp.com/) to access the app on Heroku.
 
 ##Dependencies
 ###Back End Dependencies
