@@ -81,6 +81,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("userId").innerHTML = user.email;
   }
 });
+
+
 var ideaT = document.getElementById('postTitle');
 var ideaD = document.getElementById('postDesc');
 
@@ -202,10 +204,13 @@ function downvote(e) {
 
 
 
-
+/**
+To Do, to work on the comment
+**/
 
 
 var commentT = document.getElementById('commentTitle');
+
 
 function postComment() {
   var userNameExtract = (auth_user.email).match(/^.*@/i)[0].slice(0, -1);
@@ -215,6 +220,7 @@ function postComment() {
     title: commentTitle.trim(),
     user_id: auth_user.uid,
     username: userNameExtract
+    ideakey: 
   });
 }
 
