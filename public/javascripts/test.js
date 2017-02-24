@@ -220,7 +220,6 @@ function postComment() {
     title: commentTitle.trim(),
     user_id: auth_user.uid,
     username: userNameExtract
-    ideakey: 
   });
 }
 
