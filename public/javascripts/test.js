@@ -119,6 +119,11 @@ function addIdeasList(snap) {
   var li = document.createElement('li')
   li.className += " " + "list-group-item";
   li.innerText = userNameExtract + " says " + snap.val().title;
+  var link = document.createElement('a');
+  link.setAttribute("href", snap.key+"/comments");
+  link.className += " " + "floatLeft";
+  link.innerHTML = "View Idea&nbsp;";
+  li.appendChild(link);
   var bt1 = document.createElement('button');
   bt1.className += " " + "btn btn-primary btn-sm glyphicon glyphicon-triangle-top floatRight verticalAlign ml10";
   bt1.innerHTML = snap.val().upvotes;
@@ -191,4 +196,43 @@ function downvote(e) {
     downvotes: newdownvote
   };
   firebase.database().ref().child("/ideas/" + ideaid).update(updateData);
+}
+
+
+
+
+
+
+
+
+var commentT = document.getElementById('commentTitle');
+
+function postComment() {
+  var userNameExtract = (auth_user.email).match(/^.*@/i)[0].slice(0, -1);
+  var commentTitle = commentT.value;
+  var firebaseRef = firebase.database().ref();
+  firebaseRef.child('comment').push({
+    title: commentTitle.trim(),
+    user_id: auth_user.uid,
+    username: userNameExtract
+  });
+}
+
+var comments = firebase.database().ref().child('comments');
+//This monitors a change in the idea list, in the database.
+comments.on('child_added', snap => {
+  addCommentList(snap);
+});
+
+/**
+ *Used to add a list of the old ideas to the page
+ * @param snap  - An object containig the duplicate of the database 
+ */
+function addCommentList(snap) {
+  var userNameExtract = snap.val().username;
+  var ulList = document.getElementById('list');
+  var li = document.createElement('li')
+  li.className += " " + "list-group-item";
+  li.innerText = userNameExtract + " says " + snap.val().comment;
+  ulList.appendChild(li);
 }

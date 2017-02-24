@@ -15,6 +15,9 @@ body{
 .floatRight{
 	float: right;
 }
+.floatLeft{
+	float: left;
+}
 
 .verticalAlign{
 	vertical-align: center;

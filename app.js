@@ -30,7 +30,11 @@ app.get('/dashboard',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/dashboard.html'));
 });
 
-app.get('/comment',function(req,res){
+app.get('/comments',function(req,res){
+  res.sendFile(path.join(__dirname+ '/views/comment.html'));
+});
+
+app.get('/:key/comments',function(req,res){
   res.sendFile(path.join(__dirname+ '/views/comment.html'));
 });
 
